@@ -43,6 +43,10 @@ GLboolean bloom = true; // Change with 'Space'
 GLfloat exposure = 1.0f; // Change with Q and E
 GLfloat gamma = 2.2f;
 
+// Efeito de piscar
+GLfloat valor = 15.0f;
+GLboolean valorMode = true;
+
 						 // The MAIN function, from here we start our application and run our Game loop
 int main()
 {
@@ -269,8 +273,38 @@ int main()
 		glUniform1i(glGetUniformLocation(shaderBloomFinal.Program, "bloom"), bloom);
 		glUniform1f(glGetUniformLocation(shaderBloomFinal.Program, "exposure"), exposure);
 		glUniform1f(glGetUniformLocation(shaderBloomFinal.Program, "gamma"), gamma);
+		glUniform1f(glGetUniformLocation(shaderBloomFinal.Program, "valor"), valor);
 		RenderQuad();
 
+		// Efeito pisca-pisca
+		if (valorMode) {
+			if (valor > 1)
+
+				if (valor > 5)
+				valor -= 0.1;
+				else
+				valor -= 0.03;
+
+			else
+			{
+				valorMode = false;
+			}
+		}
+
+		else
+		{
+			if (valor < 15)
+
+				if (valor < 5)
+					valor += 0.1;
+				else
+				valor += 0.03;
+
+			else
+			{
+				valorMode = true;
+			}
+		}
 
 		// Swap the buffers
 		glfwSwapBuffers(window);
